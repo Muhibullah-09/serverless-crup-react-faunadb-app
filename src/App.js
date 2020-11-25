@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Paper, Grid, Button, Typography, TextField, makeStyles, List, ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
+import { Paper, Grid, Button, TextField, makeStyles, List, ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/core';
 import Navigation from './components/Navigation';
 import { getAllExpenses, createExpenseItem, deleteExpenseItem } from './api';
 
@@ -34,7 +34,7 @@ function App() {
   function handleSubmit(event) {
     event.preventDefault();
     createExpenseItem(expenseDetail).then(res => {
-      alert('Expense details added to the database');
+      alert('Data added to the database and want to see data on UI reload the page.');
     });
     resetInputField();
   }
@@ -46,10 +46,11 @@ function App() {
     deleteExpenseItem(id).then(res => res);
     const newExpenses = expenses.filter(expense => expense.ref.id !== id);
     setExpenses(newExpenses);
+    alert('Want to remove data ,click OK!');
   }
   return (
     <>
-      <Navigation title="Serverless Expense Tracker app" />
+      <Navigation title="Serverless CRUD app" />
       <Grid container className={classes.root} spacing={3}>
         <Grid item xs={12} md={6}>
           <Paper style={{ margin: 16, padding: 16 }}>
@@ -59,7 +60,7 @@ function App() {
                   type="text"
                   name={expenseDetail}
                   value={expenseDetail}
-                  placeholder="Add your expense here"
+                  placeholder="Enter data here"
                   fullWidth
                   onChange={handleExpenseDetailChange}
                 />
@@ -78,7 +79,6 @@ function App() {
           </Paper>
         </Grid>
         <Grid item xs={12} md={5} className={classes.list}>
-          <Typography>List of Expenses</Typography>
           {expenses &&
             expenses.map(expense => (
               <div key={expense.ref.id}>
@@ -89,10 +89,9 @@ function App() {
                       <ListItemSecondaryAction>
                         <Button
                           color="primary"
-                        // onClick={}
-                        >
+                          onClick={event => handleDeleteItem(event, expense.ref.id)}>
                           Delete
-                </Button>
+                        </Button>
                       </ListItemSecondaryAction>
                     </ListItem>
                   </List>
