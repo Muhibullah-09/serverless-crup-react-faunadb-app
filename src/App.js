@@ -92,6 +92,9 @@ function App() {
                           onClick={event => handleDeleteItem(event, expense.ref.id)}>
                           Delete
                         </Button>
+                        <Button color="primary">
+                          Update
+                        </Button>
                       </ListItemSecondaryAction>
                     </ListItem>
                   </List>
